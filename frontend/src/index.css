@@ -1,0 +1,911 @@
+/* =========================================================
+   KRISHISETU AI
+   LANDING PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #ffffff;
+  color: #123b25;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MAIN APP
+   ========================================================= */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: white;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.topbar {
+  height: 96px;
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 8.2%;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid rgba(30, 80, 45, 0.08);
+
+  position: relative;
+  z-index: 20;
+}
+
+
+/* Brand */
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  color: #173d26;
+
+  font-size: 29px;
+  font-weight: 750;
+}
+
+.brand-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #2f8b4d;
+
+  color: white;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 20px rgba(47, 139, 77, 0.22);
+}
+
+
+/* Language */
+
+.language-btn {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 13px 20px;
+
+  border: 1px solid #cbdccb;
+
+  border-radius: 15px;
+
+  background: white;
+
+  color: #294b34;
+
+  font-size: 17px;
+  font-weight: 550;
+
+  transition: 0.2s ease;
+}
+
+.language-btn:hover {
+  background: #f5faf5;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+  position: relative;
+
+  width: 100%;
+
+  min-height: calc(100vh - 155px);
+
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+
+  padding: 80px 8.2% 75px;
+
+  overflow: hidden;
+
+  /* IMPORTANT:
+     Rice-field image is the ONLY background image.
+  */
+
+  background-image: url("/Rice-field.png");
+
+  background-size: cover;
+
+  background-position: center center;
+
+  background-repeat: no-repeat;
+}
+
+
+/* =========================================================
+   HERO DARK/GREEN OVERLAY
+   ========================================================= */
+
+.hero-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4, 55, 28, 0.78) 0%,
+      rgba(6, 65, 33, 0.66) 35%,
+      rgba(10, 70, 37, 0.35) 68%,
+      rgba(10, 70, 37, 0.16) 100%
+    );
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.hero-content {
+  position: relative;
+
+  z-index: 5;
+
+  width: 58%;
+
+  max-width: 760px;
+
+  color: white;
+}
+
+
+/* =========================================================
+   WELCOME BADGE
+   ========================================================= */
+
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 11px 19px;
+
+  margin-bottom: 28px;
+
+  border-radius: 999px;
+
+  background: #c9f5cb;
+
+  color: #176333;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 7px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   HERO TITLE
+   ========================================================= */
+
+.hero-content h1 {
+  margin: 0 0 25px;
+
+  font-size: clamp(54px, 5.7vw, 88px);
+
+  line-height: 0.98;
+
+  letter-spacing: -3px;
+
+  font-weight: 800;
+
+  color: white;
+}
+
+.hero-content h1 span {
+  color: #9ff3b0;
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+   ========================================================= */
+
+.hero-content > p {
+  max-width: 680px;
+
+  margin-bottom: 34px;
+
+  color: rgba(255, 255, 255, 0.94);
+
+  font-size: 20px;
+
+  line-height: 1.6;
+
+  font-weight: 450;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.hero-buttons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 42px;
+}
+
+
+/* Primary */
+
+.primary-btn {
+  min-height: 58px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 0 30px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: #27904c;
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 750;
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.primary-btn:hover {
+  background: #1f7c40;
+
+  transform: translateY(-2px);
+}
+
+
+/* Secondary */
+
+.secondary-btn {
+  min-height: 58px;
+
+  padding: 0 29px;
+
+  border: 2px solid rgba(255, 255, 255, 0.9);
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.10);
+
+  color: white;
+
+  backdrop-filter: blur(6px);
+
+  font-size: 17px;
+
+  font-weight: 650;
+
+  transition: 0.2s ease;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.20);
+}
+
+
+/* =========================================================
+   FEATURE ROW
+   ========================================================= */
+
+.feature-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  color: white;
+}
+
+.feature-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.feature-item svg {
+  color: #a6f4b3;
+}
+
+.feature-divider {
+  width: 1px;
+
+  height: 27px;
+
+  background: rgba(255, 255, 255, 0.55);
+}
+
+
+/* =========================================================
+   RIGHT FARM CARD
+   ========================================================= */
+
+.hero-visual {
+  position: relative;
+
+  z-index: 6;
+
+  width: 42%;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+}
+
+
+/* White glass card */
+
+.farm-card {
+  width: min(510px, 100%);
+
+  padding: 35px;
+
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.24);
+
+  backdrop-filter: blur(14px);
+}
+
+
+/* =========================================================
+   FARM ICON
+   ========================================================= */
+
+.farm-icon {
+  width: 84px;
+  height: 84px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 22px;
+
+  border-radius: 25px;
+
+  background: #dff5d7;
+
+  font-size: 43px;
+}
+
+
+/* =========================================================
+   FARM TITLE
+   ========================================================= */
+
+.farm-card h2 {
+  margin-bottom: 9px;
+
+  color: #123d25;
+
+  font-size: 34px;
+
+  line-height: 1.1;
+
+  font-weight: 800;
+}
+
+.farm-card > p {
+  margin-bottom: 27px;
+
+  color: #526a5a;
+
+  font-size: 17px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FARM FEATURE CARDS
+   ========================================================= */
+
+.farm-feature {
+  min-height: 86px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 17px;
+
+  padding: 15px 20px;
+
+  margin-top: 14px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.90);
+
+  box-shadow:
+    0 5px 20px rgba(25, 70, 35, 0.06);
+}
+
+.farm-feature-icon {
+  width: 53px;
+  height: 53px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 31px;
+
+  border-radius: 16px;
+
+  background: #f3faf1;
+}
+
+.farm-feature-text {
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.farm-feature-text strong {
+  color: #173f27;
+
+  font-size: 18px;
+
+  font-weight: 750;
+}
+
+.farm-feature-text span {
+  color: #607366;
+
+  font-size: 15px;
+}
+
+.farm-feature > svg {
+  color: #5d8370;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+  height: 59px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 8.2%;
+
+  background: white;
+
+  color: #587060;
+
+  font-size: 13px;
+
+  border-top: 1px solid rgba(20, 70, 35, 0.08);
+
+  position: relative;
+
+  z-index: 20;
+}
+
+footer span:first-child {
+  color: #205b31;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOGIN PAGE
+   ========================================================= */
+
+.login-page {
+  width: 100%;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  background:
+    linear-gradient(
+      rgba(12, 75, 37, 0.72),
+      rgba(12, 75, 37, 0.72)
+    ),
+    url("/Rice-field.png");
+
+  background-size: cover;
+
+  background-position: center;
+}
+
+
+.login-card {
+  width: min(440px, 100%);
+
+  padding: 45px;
+
+  border-radius: 28px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.28);
+
+  text-align: center;
+}
+
+
+.logo-circle {
+  width: 72px;
+  height: 72px;
+
+  margin: 0 auto 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 22px;
+
+  background: #2f8b4d;
+
+  color: white;
+}
+
+
+.login-card h1 {
+  color: #153d25;
+
+  margin-bottom: 10px;
+
+  font-size: 30px;
+}
+
+
+.subtitle {
+  margin-bottom: 27px;
+
+  color: #617467;
+
+  font-size: 16px;
+}
+
+
+.login-card input {
+  width: 100%;
+
+  height: 52px;
+
+  margin-bottom: 15px;
+
+  padding: 0 17px;
+
+  border: 1px solid #d1ddd3;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  font-size: 15px;
+}
+
+.login-card input:focus {
+  border-color: #329253;
+
+  box-shadow:
+    0 0 0 3px rgba(50, 146, 83, 0.12);
+}
+
+
+.login-btn {
+  width: 100%;
+
+  margin-top: 5px;
+}
+
+
+.back-btn {
+  margin-top: 22px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #287d45;
+
+  font-size: 15px;
+
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .topbar {
+    padding: 0 5%;
+  }
+
+  .hero {
+    padding: 65px 5%;
+  }
+
+  .hero-content {
+    width: 55%;
+  }
+
+  .hero-visual {
+    width: 45%;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(48px, 5vw, 70px);
+  }
+
+  .farm-card {
+    padding: 27px;
+  }
+
+  footer {
+    padding: 0 5%;
+  }
+}
+
+
+@media (max-width: 850px) {
+
+  .topbar {
+    height: 80px;
+  }
+
+  .brand {
+    font-size: 24px;
+  }
+
+  .brand-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hero {
+    min-height: auto;
+
+    flex-direction: column;
+
+    gap: 45px;
+
+    padding: 60px 6%;
+  }
+
+  .hero-content {
+    width: 100%;
+
+    max-width: 700px;
+  }
+
+  .hero-visual {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .farm-card {
+    width: min(560px, 100%);
+  }
+
+  .feature-row {
+    flex-wrap: wrap;
+  }
+
+  footer {
+    height: auto;
+
+    padding: 18px 6%;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .topbar {
+    padding: 0 20px;
+  }
+
+  .brand {
+    font-size: 21px;
+  }
+
+  .brand-icon {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 13px;
+  }
+
+  .language-btn {
+    padding: 10px 13px;
+
+    font-size: 14px;
+  }
+
+  .hero {
+    padding: 45px 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 48px;
+
+    letter-spacing: -2px;
+  }
+
+  .hero-content > p {
+    font-size: 17px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+
+  .feature-row {
+    gap: 14px;
+  }
+
+  .feature-divider {
+    display: none;
+  }
+
+  .feature-item {
+    font-size: 14px;
+  }
+
+  .farm-card {
+    padding: 25px;
+
+    border-radius: 23px;
+  }
+
+  .farm-card h2 {
+    font-size: 28px;
+  }
+
+  footer {
+    font-size: 11px;
+
+    justify-content: center;
+
+    text-align: center;
+  }
+}
