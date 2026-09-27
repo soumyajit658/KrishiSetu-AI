@@ -10,7 +10,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-function Dashboard({ onSetupFarm }) {
+function Dashboard({ onSetupFarm, farmData }) {
   return (
     <div className="dashboard">
 
@@ -51,7 +51,8 @@ function Dashboard({ onSetupFarm }) {
 
       <main className="dashboard-main">
 
-        {/* WELCOME */}
+
+        {/* ================= WELCOME ================= */}
 
         <section className="dashboard-welcome">
 
@@ -73,13 +74,24 @@ function Dashboard({ onSetupFarm }) {
           </div>
 
 
+          {/* FARM LOCATION */}
+
           <div className="location-box">
 
             <MapPin size={21} />
 
             <div>
-              <small>Farm Location</small>
-              <strong>Not set yet</strong>
+
+              <small>
+                Farm Location
+              </small>
+
+              <strong>
+                {farmData
+                  ? farmData.location
+                  : "Not set yet"}
+              </strong>
+
             </div>
 
           </div>
@@ -87,38 +99,99 @@ function Dashboard({ onSetupFarm }) {
         </section>
 
 
-        {/* ================= FARM SETUP ================= */}
+
+        {/* ================= FARM SETUP / FARM INFORMATION ================= */}
 
         <section className="farm-setup">
+
 
           <div className="setup-icon">
             <MapPin size={27} />
           </div>
 
+
           <div className="setup-content">
 
-            <span>GET STARTED</span>
 
-            <h3>
-              Set up your farm
-            </h3>
+            {farmData ? (
 
-            <p>
-              Add your farm location and crop details
-              to receive personalized recommendations.
-            </p>
+              <>
+                <span>
+                  YOUR FARM
+                </span>
+
+                <h3>
+                  {farmData.crop} Farm
+                </h3>
+
+                <p>
+                  📍 {farmData.location}
+                  &nbsp; • &nbsp;
+                  🌱 {farmData.area} acres
+                </p>
+
+
+                <div className="farm-details-row">
+
+                  <span>
+                    Soil:{" "}
+                    <strong>
+                      {farmData.soil}
+                    </strong>
+                  </span>
+
+                  <span>
+                    Irrigation:{" "}
+                    <strong>
+                      {farmData.irrigation}
+                    </strong>
+                  </span>
+
+                </div>
+
+              </>
+
+            ) : (
+
+              <>
+
+                <span>
+                  GET STARTED
+                </span>
+
+                <h3>
+                  Set up your farm
+                </h3>
+
+                <p>
+                  Add your farm location and crop details
+                  to receive personalized recommendations.
+                </p>
+
+              </>
+
+            )}
 
           </div>
 
+
+          {/* SETUP / EDIT BUTTON */}
+
           <button
-  className="setup-btn"
-  onClick={onSetupFarm}
->
-  Set Up Farm
-  <ArrowRight size={18} />
-</button>
+            className="setup-btn"
+            onClick={onSetupFarm}
+          >
+
+            {farmData
+              ? "Edit Farm"
+              : "Set Up Farm"}
+
+            <ArrowRight size={18} />
+
+          </button>
 
         </section>
+
 
 
         {/* ================= FARM INSIGHTS ================= */}
@@ -146,9 +219,11 @@ function Dashboard({ onSetupFarm }) {
           </div>
 
 
+
           <div className="insight-grid">
 
-            {/* WEATHER */}
+
+            {/* ================= WEATHER ================= */}
 
             <div className="insight-card">
 
@@ -158,24 +233,34 @@ function Dashboard({ onSetupFarm }) {
 
               <div className="insight-info">
 
-                <span>Weather</span>
+                <span>
+                  Weather
+                </span>
 
                 <strong>
-                  Waiting for location
+                  {farmData
+                    ? "Ready for weather data"
+                    : "Waiting for location"}
                 </strong>
 
                 <small>
-                  Weather data will appear here
+                  {farmData
+                    ? `Weather for ${farmData.location}`
+                    : "Weather data will appear here"}
                 </small>
 
               </div>
 
-              <ArrowRight className="card-arrow" size={18} />
+              <ArrowRight
+                className="card-arrow"
+                size={18}
+              />
 
             </div>
 
 
-            {/* SOIL */}
+
+            {/* ================= SOIL ================= */}
 
             <div className="insight-card">
 
@@ -185,24 +270,34 @@ function Dashboard({ onSetupFarm }) {
 
               <div className="insight-info">
 
-                <span>Soil Health</span>
+                <span>
+                  Soil Health
+                </span>
 
                 <strong>
-                  Not available
+                  {farmData
+                    ? farmData.soil
+                    : "Not available"}
                 </strong>
 
                 <small>
-                  Add your soil information
+                  {farmData
+                    ? "Farm soil information"
+                    : "Add your soil information"}
                 </small>
 
               </div>
 
-              <ArrowRight className="card-arrow" size={18} />
+              <ArrowRight
+                className="card-arrow"
+                size={18}
+              />
 
             </div>
 
 
-            {/* SATELLITE */}
+
+            {/* ================= SATELLITE ================= */}
 
             <div className="insight-card">
 
@@ -212,34 +307,47 @@ function Dashboard({ onSetupFarm }) {
 
               <div className="insight-info">
 
-                <span>Satellite</span>
+                <span>
+                  Satellite
+                </span>
 
                 <strong>
-                  Waiting for farm
+                  {farmData
+                    ? "Farm ready"
+                    : "Waiting for farm"}
                 </strong>
 
                 <small>
-                  Crop monitoring will appear here
+                  {farmData
+                    ? `Monitoring ${farmData.crop} fields`
+                    : "Crop monitoring will appear here"}
                 </small>
 
               </div>
 
-              <ArrowRight className="card-arrow" size={18} />
+              <ArrowRight
+                className="card-arrow"
+                size={18}
+              />
 
             </div>
+
 
           </div>
 
         </section>
 
 
+
         {/* ================= AI ADVISOR ================= */}
 
         <section className="ai-advisor">
 
+
           <div className="ai-icon">
             <Bot size={31} />
           </div>
+
 
           <div className="ai-content">
 
@@ -258,6 +366,7 @@ function Dashboard({ onSetupFarm }) {
 
           </div>
 
+
           <button className="ai-button">
 
             Ask AI
@@ -266,12 +375,15 @@ function Dashboard({ onSetupFarm }) {
 
           </button>
 
+
         </section>
+
 
 
         {/* ================= SMART FARMING TOOLS ================= */}
 
         <section className="dashboard-section">
+
 
           <div className="section-heading">
 
@@ -294,10 +406,11 @@ function Dashboard({ onSetupFarm }) {
           </div>
 
 
+
           <div className="tools-grid">
 
 
-            {/* CROP ADVISORY */}
+            {/* ================= CROP ADVISORY ================= */}
 
             <div className="tool-card">
 
@@ -325,7 +438,8 @@ function Dashboard({ onSetupFarm }) {
             </div>
 
 
-            {/* DISEASE DETECTION */}
+
+            {/* ================= DISEASE DETECTION ================= */}
 
             <div className="tool-card">
 
@@ -353,7 +467,8 @@ function Dashboard({ onSetupFarm }) {
             </div>
 
 
-            {/* SATELLITE */}
+
+            {/* ================= SATELLITE ================= */}
 
             <div className="tool-card">
 
@@ -381,7 +496,8 @@ function Dashboard({ onSetupFarm }) {
             </div>
 
 
-            {/* AI ASSISTANT */}
+
+            {/* ================= AI ASSISTANT ================= */}
 
             <div className="tool-card">
 
@@ -408,9 +524,11 @@ function Dashboard({ onSetupFarm }) {
 
             </div>
 
+
           </div>
 
         </section>
+
 
 
         {/* ================= FOOTER ================= */}
@@ -426,6 +544,7 @@ function Dashboard({ onSetupFarm }) {
           </span>
 
         </footer>
+
 
       </main>
 

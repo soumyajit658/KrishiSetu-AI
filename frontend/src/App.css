@@ -1110,3 +1110,31 @@
   }
 
 }
+
+
+/* =========================================================
+   SAVED FARM DETAILS
+========================================================= */
+
+.farm-details-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.farm-details-row span {
+  background: #edf7ee;
+  border: 1px solid #d7ead9;
+  color: #58705d;
+
+  padding: 6px 10px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+}
+
+.farm-details-row strong {
+  color: #2f7040;
+}

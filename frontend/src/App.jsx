@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   Sprout,
   Satellite,
@@ -16,263 +17,478 @@ import "./index.css";
 import "./App.css";
 
 function App() {
+
   const [showLogin, setShowLogin] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showFarmSetup, setShowFarmSetup] = useState(false);
+
+  // Stores the farmer's farm information
   const [farmData, setFarmData] = useState(null);
 
 
-  // =========================
-  // DASHBOARD
-  // =========================
+  // =====================================================
+  // FARM SETUP
+  // =====================================================
+
   if (showFarmSetup) {
-  return (
-    <FarmSetup
-      onBack={() => setShowFarmSetup(false)}
-    />
-  );
-}
+    return (
+      <FarmSetup
 
-if (showFarmSetup) {
-  return (
-    <FarmSetup
-      onBack={() => setShowFarmSetup(false)}
-      onSave={(data) => {
-        setFarmData(data);
-        setShowFarmSetup(false);
-        setShowDashboard(true);
-      }}
-    />
-  );
-}
+        onBack={() => {
+          setShowFarmSetup(false);
+        }}
 
-  // =========================
+        onSave={(data) => {
+
+          // Save farm information in React state
+          setFarmData(data);
+
+          // Close Farm Setup
+          setShowFarmSetup(false);
+
+          // Return to Dashboard
+          setShowDashboard(true);
+
+        }}
+
+      />
+    );
+  }
+
+
+  // =====================================================
+  // DASHBOARD
+  // =====================================================
+
+  if (showDashboard) {
+    return (
+      <Dashboard
+
+        onSetupFarm={() => {
+          setShowFarmSetup(true);
+        }}
+
+        farmData={farmData}
+
+      />
+    );
+  }
+
+
+  // =====================================================
   // LOGIN
-  // =========================
+  // =====================================================
+
   if (showLogin) {
+
     return (
       <div className="login-page">
+
         <div className="login-card">
+
           <div className="logo-circle">
             <Sprout size={34} />
           </div>
 
-          <h1>Welcome to KrishiSetu</h1>
+
+          <h1>
+            Welcome to KrishiSetu
+          </h1>
+
 
           <p className="subtitle">
             Your AI-powered farming companion.
           </p>
+
 
           <input
             type="email"
             placeholder="Email address"
           />
 
+
           <input
             type="password"
             placeholder="Password"
           />
 
+
           <button
             className="primary-btn login-btn"
-            onClick={() => setShowDashboard(true)}
+
+            onClick={() => {
+              setShowLogin(false);
+              setShowDashboard(true);
+            }}
           >
+
             Login
+
             <ArrowRight size={20} />
+
           </button>
+
 
           <button
             className="back-btn"
-            onClick={() => setShowLogin(false)}
+
+            onClick={() => {
+              setShowLogin(false);
+            }}
           >
+
             ← Back to Welcome
+
           </button>
+
         </div>
+
       </div>
     );
   }
 
-  // =========================
+
+  // =====================================================
   // LANDING PAGE
-  // =========================
+  // =====================================================
+
   return (
+
     <div className="app">
 
-      {/* ================= HEADER ================= */}
+
+      {/* =================================================
+          HEADER
+      ================================================= */}
+
       <header className="topbar">
 
         <div className="brand">
+
           <div className="brand-icon">
             <Sprout size={28} />
           </div>
 
-          <span>KrishiSetu</span>
+          <span>
+            KrishiSetu
+          </span>
+
         </div>
 
+
         <button className="language-btn">
+
           <Globe size={19} />
-          <span>English</span>
+
+          <span>
+            English
+          </span>
+
           <ChevronDown size={17} />
+
         </button>
 
       </header>
 
 
-      {/* ================= HERO ================= */}
+
+      {/* =================================================
+          HERO
+      ================================================= */}
+
       <main className="hero">
 
+
         {/* Background overlay */}
+
         <div className="hero-overlay"></div>
 
-        {/* LEFT CONTENT */}
+
+
+        {/* =================================================
+            LEFT CONTENT
+        ================================================= */}
+
         <section className="hero-content">
 
+
           <div className="welcome-badge">
+
             🌾
-            <span>Smart farming made simple</span>
+
+            <span>
+              Smart farming made simple
+            </span>
+
           </div>
 
+
+
           <h1>
+
             Smarter farming.
+
             <br />
-            <span>Better decisions.</span>
+
+            <span>
+              Better decisions.
+            </span>
+
           </h1>
 
+
+
           <p>
+
             KrishiSetu connects farmers with AI-powered
             agricultural guidance using weather, soil,
             satellite insights and crop information.
+
           </p>
 
 
-          {/* BUTTONS */}
+
+          {/* =================================================
+              BUTTONS
+          ================================================= */}
+
           <div className="hero-buttons">
 
-            <button
-              className="primary-btn"
-              onClick={() => setShowDashboard(true)}
-            >
-              Get Started
-              <ArrowRight size={21} />
-            </button>
+
+            {/* GET STARTED */}
 
             <button
-              className="secondary-btn"
-              onClick={() => setShowLogin(true)}
+
+              className="primary-btn"
+
+              onClick={() => {
+                setShowDashboard(true);
+              }}
+
             >
-              I already have an account
+
+              Get Started
+
+              <ArrowRight size={21} />
+
             </button>
+
+
+
+            {/* EXISTING ACCOUNT */}
+
+            <button
+
+              className="secondary-btn"
+
+              onClick={() => {
+                setShowLogin(true);
+              }}
+
+            >
+
+              I already have an account
+
+            </button>
+
 
           </div>
 
 
-          {/* FEATURES */}
+
+          {/* =================================================
+              FEATURES
+          ================================================= */}
+
           <div className="feature-row">
 
+
             <div className="feature-item">
+
               <Satellite size={24} />
-              <span>Satellite Insights</span>
+
+              <span>
+                Satellite Insights
+              </span>
+
             </div>
+
 
             <div className="feature-divider"></div>
 
+
             <div className="feature-item">
+
               <CloudSun size={24} />
-              <span>Weather Guidance</span>
+
+              <span>
+                Weather Guidance
+              </span>
+
             </div>
+
 
             <div className="feature-divider"></div>
 
+
             <div className="feature-item">
+
               <Bot size={24} />
-              <span>AI Assistance</span>
+
+              <span>
+                AI Assistance
+              </span>
+
             </div>
+
 
           </div>
 
         </section>
 
 
-        {/* ================= FARM CARD ================= */}
+
+        {/* =================================================
+            FARM CARD
+        ================================================= */}
+
         <section className="hero-visual">
+
 
           <div className="farm-card">
 
+
             {/* Farm icon */}
+
             <div className="farm-icon">
+
               🌾
+
             </div>
 
-            <h2>Your Farm</h2>
+
+            <h2>
+              Your Farm
+            </h2>
+
 
             <p>
               Personalized insights for your crops and farm.
             </p>
 
 
-            {/* WEATHER */}
+
+            {/* =================================================
+                WEATHER
+            ================================================= */}
+
             <div className="farm-feature">
+
 
               <div className="farm-feature-icon">
                 🌦️
               </div>
 
+
               <div className="farm-feature-text">
-                <strong>Weather</strong>
-                <span>Live updates</span>
+
+                <strong>
+                  Weather
+                </strong>
+
+                <span>
+                  Live updates
+                </span>
+
               </div>
+
 
               <ArrowRight size={21} />
 
             </div>
 
 
-            {/* SATELLITE */}
+
+            {/* =================================================
+                SATELLITE
+            ================================================= */}
+
             <div className="farm-feature">
+
 
               <div className="farm-feature-icon">
                 🛰️
               </div>
 
+
               <div className="farm-feature-text">
-                <strong>Satellite</strong>
-                <span>Crop insights</span>
+
+                <strong>
+                  Satellite
+                </strong>
+
+                <span>
+                  Crop insights
+                </span>
+
               </div>
+
 
               <ArrowRight size={21} />
 
             </div>
 
 
-            {/* SOIL */}
+
+            {/* =================================================
+                SOIL
+            ================================================= */}
+
             <div className="farm-feature">
+
 
               <div className="farm-feature-icon">
                 🌱
               </div>
 
+
               <div className="farm-feature-text">
-                <strong>Soil</strong>
-                <span>Health data</span>
+
+                <strong>
+                  Soil
+                </strong>
+
+                <span>
+                  Health data
+                </span>
+
               </div>
+
 
               <ArrowRight size={21} />
 
             </div>
 
+
           </div>
 
         </section>
 
+
       </main>
 
 
-      {/* ================= FOOTER ================= */}
+
+      {/* =================================================
+          FOOTER
+      ================================================= */}
+
       <footer>
 
         <span>
           🌾 KrishiSetu AI
         </span>
+
 
         <span>
           Technology for smarter, sustainable farming
@@ -280,7 +496,9 @@ if (showFarmSetup) {
 
       </footer>
 
+
     </div>
+
   );
 }
 
