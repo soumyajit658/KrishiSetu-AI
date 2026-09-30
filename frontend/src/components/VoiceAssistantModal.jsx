@@ -568,7 +568,7 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
             </div>
           </div>
 
-          <button className="modal-close-btn" onClick={onClose} aria-label="Close KrishiBandhu Voice">
+          <button className="close-btn modal-close-btn" onClick={onClose} aria-label="Close KrishiBandhu Voice" title="Close">
             <X size={20} />
           </button>
         </div>

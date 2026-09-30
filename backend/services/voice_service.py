@@ -398,52 +398,6 @@ def build_dynamic_agronomic_voice_response(
         elif lang == "hi":
             return f"{crop_disp} में कीटों से बचाव के लिए नीम तेल 3 मिली प्रति लीटर पानी में मिलाकर छिड़कें। तना छेदक या सुंडी का प्रकोप अधिक होने पर फेरोमोन ट्रैप लगाएं और कोराजन का छिड़काव करें।"
         else:
-            return f"For pest defense on {crop_disp}, start with cold-pressed Neem Oil at 3 ml per liter. For stem borers or caterpillars, install pheromone traps and apply Chlorantraniliprole under guidance."    else:
-            return f"Dark or brown spots on {crop_disp} leaves typically indicate fungal leaf spot or blight. Prune severely infected foliage and spray Mancozeb or Saaf at 2 grams per liter, avoiding excess nitrogen."
-
-    # 4. YELLOW LEAVES & CHLOROSIS ("পাতা হলুদ", "पत्तियां पीली", "yellow leaves")
-    if any(w in q_lower for w in ["yellow", "peela", "peeli", "peele", "holud", "পিলা", "হলুদ", "पीला", "पीली", "पीले", "पीलापन", "chlorosis", "ফ্যাকাশে"]):
-        if lang == "bn":
-            return f"{crop_disp} গাছের পাতা হলুদ হওয়ার প্রধান কারণ নাইট্রোজেন বা জিংকের ঘাটতি, অথবা অতিরিক্ত জল জমে শিকড় শ্বাসরুদ্ধ হওয়া। জমিতে জল জমলে নিকাশ করুন এবং প্রতি লিটার জলে পনেরো গ্রাম ইউরিয়া ও দুই গ্রাম চিলেটেড জিংক মিশিয়ে স্প্রে করুন।"
-        elif lang == "hi":
-            return f"{crop_disp} में पत्तियां पीली पड़ना मुख्य रूप से नाइट्रोजन या जिंक की कमी अथवा जलभराव का संकेत है। खेत से अतिरिक्त पानी निकालें और 15 ग्राम यूरिया तथा 2 ग्राम चिलेटेड जिंक प्रति लीटर पानी में मिलाकर स्प्रे करें।"
-        else:
-            return f"Leaf yellowing in {crop_disp} typically stems from Nitrogen or Zinc deficiency, or root waterlogging. Ensure soil drains well and apply a foliar spray of 1.5% Urea with 2g/L Chelated Zinc."
-
-    # 5. IRRIGATION & WATER MANAGEMENT ("সেচ", "জল দেব", "পানি", "सिंचाई", "water", "irrigate")
-    if any(w in q_lower for w in ["water", "irrigate", "irrigation", "পানি", "सिंचाई", "সেচ", "জল", "पानी कब"]):
-        is_wet = soil_moisture and ("wet" in soil_moisture.lower() or "humid" in soil_moisture.lower() or "adequate" in soil_moisture.lower())
-        if is_wet or rain_chance > 50:
-            if lang == "bn":
-                return f"আপনার {location} অঞ্চলের মাটিতে বর্তমানে পর্যাপ্ত আর্দ্রতা রয়েছে এবং বৃষ্টির সম্ভাবনা {rain_chance}%। আজ নতুন করে সেচ দেওয়ার প্রয়োজন নেই, অতিরিক্ত জলে শিকড় পচে যেতে পারে।"
-            elif lang == "hi":
-                return f"आपके खेत में अभी पर्याप्त नमी मौजूद है और बारिश की संभावना {rain_chance}% है। आज {crop_disp} में अतिरिक्त सिंचाई न करें, ताकि जड़ गलन से बचाव हो सके।"
-            else:
-                return f"Your soil in {location} currently has adequate moisture with {rain_chance}% rain forecast. Do not irrigate today to avoid waterlogging."
-        else:
-            if lang == "bn":
-                return f"মাটির উপরিভাগ পরীক্ষা করে দেখুন। যদি {crop_disp} গাছের গোড়ায় মাটি শুষ্ক থাকে, তবে বিকেলে হালকা সেচ দিন। খেয়াল রাখবেন যেন জমিতে জল দীর্ঘক্ষণ জমে না থাকে।"
-            elif lang == "hi":
-                return f"खेत की ऊपरी मिट्टी सूख रही है तो आज शाम हल्की सिंचाई करें। अत्यधिक पानी का भराव न होने दें और मेड़ सुरक्षित रखें।"
-            else:
-                return f"Check your field surface. If topsoil is dry around your {crop_disp}, apply a light irrigation this evening without flooding."
-
-    # 6. FERTILIZER & NPK NUTRITION ("সার", "ইউরিয়া", "खाद", "यूरिया", "fertilizer", "dap", "potash")
-    if any(w in q_lower for w in ["fertilizer", "urea", "dap", "potash", "khad", "npk", "खाद", "সার", "यूरिया", "पोटाश", "সার প্রয়োগ"]):
-        if lang == "bn":
-            return f"{crop_disp} ফসলের জন্য জমিতে পর্যাপ্ত আর্দ্রতা থাকা অবস্থায় ইউরিয়া, ডিএপি ও পটাশ সুষম অনুপাতে দিন। ইউরিয়া একবারে না দিয়ে দুই থেকে তিন কিস্তিতে দিলে গাছ সবচেয়ে বেশি পুষ্টি গ্রহণ করতে পারে।"
-        elif lang == "hi":
-            return f"{crop_disp} में खाद हमेशा मिट्टी में पर्याप्त नमी होने पर ही दें। यूरिया को एक साथ न डालकर दो से तीन बार में बाँटकर देना अधिक फायदेमंद है। सूखी जमीन में यूरिया कभी न डालें।"
-        else:
-            return f"Apply balanced NPK fertilizers for {crop_disp} only when soil has adequate moisture. Splitting Urea into 2 to 3 split doses boosts nitrogen use efficiency significantly."
-
-    # 7. PESTS, INSECTS & BORERS ("পোকা", "কীট", "कीट", "मरोड़", "pest", "borer", "worm")
-    if any(w in q_lower for w in ["pest", "insect", "worm", "borer", "aphid", "কীট", "কীড়া", "পোকা", "মাজরা", "কীটপতঙ্গ", "कीट", "कीड़ा", "माहू", "सुंडी"]):
-        if lang == "bn":
-            return f"{crop_disp} ফসলে পোকার আক্রমণ রুখতে প্রথমে নিম তেল প্রতি লিটার জলে তিন মিলি মিশিয়ে সকালে স্প্রে করুন। মাজরা পোকার প্রকোপ থাকলে জমিতে ফেরোমোন ফাঁদ লাগান এবং প্রয়োজনে কার্টাপ বা কোরাজন ব্যবহার করুন।"
-        elif lang == "hi":
-            return f"{crop_disp} में कीटों से बचाव के लिए नीम तेल 3 मिली प्रति लीटर पानी में मिलाकर छिड़कें। तना छेदक या सुंडी का प्रकोप अधिक होने पर फेरोमोन ट्रैप लगाएं और कोराजन का छिड़काव करें।"
-        else:
             return f"For pest defense on {crop_disp}, start with cold-pressed Neem Oil at 3 ml per liter. For stem borers or caterpillars, install pheromone traps and apply Chlorantraniliprole under guidance."
 
     # 8. SOWING & SEED TREATMENT ("বীজ", "বপন", "বুওয়াই", "बीज", "बुवाई", "seed", "sow")

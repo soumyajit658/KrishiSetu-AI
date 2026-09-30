@@ -352,8 +352,9 @@ function CropDoctorModal({ isOpen, onClose, farmData, onOpenChatWithContext }) {
                           className="thumb-remove"
                           onClick={() => removeCropImage(index)}
                           title="Remove photo"
+                          aria-label="Remove photo"
                         >
-                          ×
+                          <X size={14} />
                         </button>
                         <span className="thumb-label">Photo {index + 1}</span>
                       </div>
