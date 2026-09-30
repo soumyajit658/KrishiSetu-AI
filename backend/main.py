@@ -97,7 +97,7 @@ def get_ai_status():
                else ("Configured" if has_key else None))
     return {
         "gemini_configured": has_key,
-        "engine": "Gemini 1.5/2.0 Flash (Live AI)" if has_key else "KrishiSetu Expert Engine (Offline Heuristics)",
+        "engine": "Gemini Live AI (3.8/3.7 Flash)" if has_key else "KrishiSetu Expert Engine (Offline Heuristics)",
         "key_preview": masked,
     }
 
@@ -117,7 +117,7 @@ async def update_gemini_key(req: GeminiKeyRequest):
             "message": "Gemini API Key removed. KrishiSetu is now using the built-in Expert Agronomy Engine.",
         }
 
-    models_to_test = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
+    models_to_test = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-flash-latest"]
     verified, last_err = False, ""
 
     async with httpx.AsyncClient(timeout=12.0) as client:

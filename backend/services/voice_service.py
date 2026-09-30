@@ -26,6 +26,12 @@ def get_local_crop(crop_name: str, lang: str) -> str:
 
 
 # Comprehensive Linguistic & Phonetic Language Detector
+BENGALI_PHRASES = [
+    "ki korbo", "ki vabe", "kivabe", "dhaner pata", "pani kobe", "agami kal", "agamikal", 
+    "jol debo", "jol deya", "sar debo", "poka legeche", "daag hoyeche", "ki sar debo", 
+    "dhaner rog", "alu chash", "sorisa chash", "fosol nosto"
+]
+
 BENGALI_KEYWORDS = {
     "amar", "amader", "dhaner", "dhane", "dhan", "pata", "patagulo", "patay", "paata", 
     "holud", "ki korbo", "korbo", "kore", "kora", "shorisa", "alu", "chash", 
@@ -37,41 +43,76 @@ BENGALI_KEYWORDS = {
     "bopon", "ghas", "agacha", "muriya", "shekor", "khobor", "abohawa", "abohawar", "bolun", "shunchen"
 }
 
+HINDI_PHRASES = [
+    "kya karu", "kya kare", "kya karein", "kya karna", "kaise kare", "kese kare", 
+    "kab dena", "kab de", "pani dena", "pani kab", "kab pani", "pani kab dale", 
+    "khad kab", "kya dale", "kaun si dawa", "konsi dawa", "kaun sa spray", "kya chhidkaw kare",
+    "peela pad raha", "peeli ho rahi", "peele ho rahe", "peela pan", "fasal me", "fasal mein", 
+    "khet me", "khet mein", "kisan bhai", "kya hoga", "kaise bachaye", "dawa batao", 
+    "dawai bataiye", "kitna dale", "kitni matra", "keeda lag gaya", "sundi ka attack",
+    "agli fasal", "baad me kya", "barish aane wali", "barish hone par", "sinchai kab kare",
+    "patto par", "patte par", "sukha pad", "paani kab lagaye", "dawa kaun si", "upchar bataiye"
+]
+
 HINDI_KEYWORDS = {
-    "meri", "mera", "mere", "fasal", "faslo", "gehu", "dhan", "kya karu", "kya kare", 
-    "peela", "peeli", "peele", "pani", "paani", "khad", "kisan", "keede", "keeda", "keedo", 
-    "barish", "barsat", "kab", "sinchai", "sinchayi", "dhabbe", "dhabba", "rog", "kitna", "kitni", 
-    "dena", "chahiye", "chaiye", "cheiya", "chahie", "hoga", "hogi", "kaise", "kare", "kheto", "khet", "patte", 
-    "pattiya", "patto", "dawa", "dawai", "chhidkaw", "upar", "mausam", "kisan", "upchar", 
-    "beej", "buwai", "kharpatwar", "sukha", "gala", "jad", "gobar", "urvarak", "main", "mein", "me", "karna", "batao", "bataiye"
+    # Pronouns & Interrogatives
+    "meri", "mera", "mere", "apna", "apni", "apne", "humara", "humari", "humare", "mujhe", 
+    "hume", "isse", "isme", "ispe", "usme", "uspe", "kya", "kyun", "kyu", "kaise", "kese", 
+    "kab", "kaha", "kahan", "kitna", "kitni", "kitne", "kaun", "koun", "kaunsa", "kaunsi", "kaunse",
+    # Verbs & Auxiliaries
+    "hai", "hain", "ho", "hoon", "tha", "the", "thi", "hoga", "hogi", "honge", "kare", 
+    "karen", "karein", "karna", "karu", "karun", "karega", "karegi", "karenge", "karta", 
+    "karti", "karte", "dena", "dale", "dalen", "dalna", "lagaye", "lagana", "chahiye", 
+    "chaiye", "chahie", "cheiya", "batao", "bataiye", "boliye", "bolo", "samjhao", "dekho",
+    # Prepositions & Connectors
+    "ka", "ki", "ke", "ko", "se", "me", "mein", "main", "par", "pe", "aur", "ya", 
+    "nahi", "nahin", "mat", "bhi", "toh", "to", "tak", "liye", "wala", "wali", "wale",
+    # Agronomic Terms
+    "fasal", "faslo", "khet", "kheti", "kheto", "kisan", "kisano", "mitti", "zameen", 
+    "gehu", "gehun", "dhan", "chawal", "makka", "sarso", "sarson", "aloo", "alu", "tamatar", 
+    "mirch", "kapas", "ganna", "pyaaz", "lahsun", "pani", "paani", "sinchai", "sinchayi", 
+    "khad", "dawa", "dawai", "chhidkaw", "chhidkao", "peela", "peeli", "peele", "peelapan", 
+    "kala", "kali", "kale", "safed", "sukha", "sukh", "patte", "patti", "pattiya", "pattiyan", 
+    "paudha", "paudhe", "podha", "podhe", "tana", "jad", "fal", "keeda", "keede", "keedo", 
+    "kit", "kito", "sundi", "illii", "illi", "mahu", "barish", "barsat", "badal", "mausam", 
+    "hawa", "dhoop", "garmi", "sardi", "beej", "buwai", "ropai", "katai", "kharpatwar", 
+    "gobar", "urvarak", "nami", "upchar", "ilaaj", "fayda", "nuksan", "rog", "dhabba", "dhabbe"
 }
 
+ENGLISH_PHRASES = [
+    "should i", "what should", "how to", "how can i", "is it", "when should", 
+    "can i", "do i need", "there is", "there are", "my crop is", "why are", 
+    "please tell me", "how much should", "what is the", "good morning", "tell me about"
+]
+
 ENGLISH_KEYWORDS = {
-    "my", "the", "is", "are", "crop", "crops", "rice", "wheat", "potato", "tomato", 
-    "leaves", "leaf", "yellow", "yellowing", "water", "irrigate", "irrigation", 
-    "fertilizer", "fertilizers", "soil", "rain", "raining", "tomorrow", "spots", 
-    "brown", "should", "what", "when", "how", "spray", "pest", "pests", "insect", 
-    "insects", "disease", "harvest", "yield", "urea", "dose", "dosage", "grow", "after", "give", "much"
+    "what", "when", "how", "why", "which", "where", "who", "should", "could", "would",
+    "will", "shall", "does", "doesnt", "dont", "please", "help", "problem", "solution",
+    "because", "tomorrow", "yesterday", "morning", "evening", "today", "tonight",
+    "leaves", "turning", "yellowing", "infection", "symptoms", "advice", "suggestion",
+    "recommend", "recommendation", "farmers", "farming", "agriculture", "harvesting"
 }
 
 
 def detect_spoken_language(text: str, default_lang: str = "en") -> str:
     """
-    State-of-the-Art Language Detection for Regional Indian Speech:
-    1. Direct Unicode Script analysis (Bengali \u0980-\u09FF, Devanagari \u0900-\u097F).
-    2. Transliteration & Phonetic Keyword Frequency (Banglish vs Hinglish vs English).
+    Bulletproof Multilingual Language Detector for Regional Indian Speech:
+    1. Direct Unicode Script analysis:
+       - Devanagari (\u0900-\u097F) -> 100% Hindi ('hi').
+       - Bengali (\u0980-\u09FF) -> 100% Bengali ('bn').
+    2. Deep Lexical & Phrase Frequency for Romanized Hinglish vs Banglish vs English.
     """
     if not text or not text.strip():
         return default_lang if default_lang in ["bn", "hi", "en"] else "en"
     
     clean_t = text.strip()
     
-    # 1. Unicode Script Matching
-    if re.search(r'[\u0980-\u09FF]', clean_t):
-        return "bn"
-    
+    # 1. Direct Unicode Script Matching (Highest Precision)
     if re.search(r'[\u0900-\u097F]', clean_t):
         return "hi"
+        
+    if re.search(r'[\u0980-\u09FF]', clean_t):
+        return "bn"
     
     # 2. Phonetic & Lexical token analysis for Romanized text
     tokens = re.findall(r'[a-zA-Z]+', clean_t.lower())
@@ -80,32 +121,37 @@ def detect_spoken_language(text: str, default_lang: str = "en") -> str:
         
     t_lower = clean_t.lower()
     
-    bn_score = 0
-    hi_score = 0
-    en_score = 0
+    bn_score = 0.0
+    hi_score = 0.0
+    en_score = 0.0
     
-    # Check key multi-word phrases first
-    for phrase in ["ki korbo", "ki vabe", "kivabe", "dhaner pata", "pani kobe", "agami kal", "agamikal", "jol debo"]:
+    # Check multi-word phrase patterns
+    for phrase in HINDI_PHRASES:
         if phrase in t_lower:
-            bn_score += 4.0
-                
-    for phrase in ["kya karu", "kya kare", "kab dena", "kab de", "pani dena", "pani kab", "kese kare", "kaise kare", "fasal me", "fasal main", "cheiya", "chaiye"]:
+            hi_score += 4.5
+
+    for phrase in BENGALI_PHRASES:
         if phrase in t_lower:
-            hi_score += 4.0
+            bn_score += 4.5
+            
+    for phrase in ENGLISH_PHRASES:
+        if phrase in t_lower:
+            en_score += 4.5
 
     for tok in tokens:
-        if tok in BENGALI_KEYWORDS:
-            bn_score += 1.5
         if tok in HINDI_KEYWORDS:
-            hi_score += 1.5
+            hi_score += 1.8
+        if tok in BENGALI_KEYWORDS:
+            bn_score += 1.8
         if tok in ENGLISH_KEYWORDS:
-            en_score += 1.0
+            en_score += 1.2
 
-    if bn_score > hi_score and bn_score > en_score and bn_score >= 1.0:
-        return "bn"
-    if hi_score > bn_score and hi_score > en_score and hi_score >= 1.0:
+    # Decisive language categorization
+    if hi_score >= 1.5 and hi_score >= bn_score and hi_score >= en_score:
         return "hi"
-    if en_score >= 1.0 and en_score > bn_score and en_score > hi_score:
+    if bn_score >= 1.5 and bn_score > hi_score and bn_score >= en_score:
+        return "bn"
+    if en_score >= 2.0 and en_score > hi_score and en_score > bn_score:
         return "en"
         
     if default_lang in ["bn", "hi", "en"]:
@@ -224,7 +270,7 @@ async def query_gemini_for_voice(
     conversation_history: Optional[List[Dict[str, str]]] = None
 ) -> Optional[str]:
     """Call Google Gemini Generative AI models with context and conversation turns."""
-    models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
+    models = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-flash-latest", "gemini-2.5-flash-lite"]
     
     contents = []
     # Add recent conversation turns for conversational follow-ups
@@ -558,14 +604,14 @@ FARMER'S CURRENT AGRICULTURAL CONTEXT:
 {f"- Recent Crop Doctor Report: {doctor_issue}" if doctor_issue else ""}
 
 STRICT AUTOMATIC MULTILINGUAL CONVERSATION RULES:
-1. AUTOMATIC LANGUAGE MATCHING: You must understand the farmer's language automatically ({target_lang_name}).
-   - If the farmer asks in Hindi (in Devanagari or Hinglish), you MUST reply completely in authentic, natural Hindi.
-   - If the farmer asks in Bengali (in Bengali script or Banglish), you MUST reply completely in natural Bengali.
-   - If the farmer asks in English, you MUST reply in clear, simple English.
-   Never mix languages or translate into an unintended language.
+1. TARGET SPOKEN LANGUAGE: {target_lang_name} (Code: '{language}').
+   - IF QUERY IS IN HINDI OR TARGET IS HINDI ('hi'): You MUST reply 100% in natural, respectful, conversational Hindi in pure Devanagari script (हिन्दी). Even if the farmer wrote or spoke in Romanized Hinglish (e.g. 'kya kare', 'fasal me khad', 'peela pad raha'), your spoken answer MUST be in authentic Devanagari Hindi. Start with "नमस्ते किसान भाई," when appropriate.
+   - IF QUERY IS IN BENGALI OR TARGET IS BENGALI ('bn'): You MUST reply 100% in natural Bengali in Bengali script (বাংলা). Start with "নমস্কার কৃষক বন্ধু," when appropriate.
+   - IF QUERY IS IN ENGLISH ('en'): You MUST reply in clear, simple spoken English.
+   NEVER reply in English if the farmer asked in Hindi, Hinglish, Bengali, or Banglish!
 2. SPOKEN PACING: Keep responses concise (2 to 4 sentences, under 45 words) so it sounds natural when spoken aloud.
 3. CONVERSATIONAL & DIRECT: Directly answer the farmer's specific question (e.g., yellow leaves, fertilizer before rain, watering, pest control, crop rotation).
-4. NO MARKDOWN: Never use markdown symbols, asterisks, hashes, lists, bullet points, numbers, or formulas.
+4. NO MARKDOWN: Never use markdown symbols, asterisks, hashes, lists, bullet points, numbers, or formulas. Output clean plain spoken text only.
 5. AGRICULTURAL SAFETY: Do not invent hazardous chemical dosages. Recommend safe practices."""
 
         spoken_response = await query_gemini_for_voice(
@@ -589,6 +635,14 @@ STRICT AUTOMATIC MULTILINGUAL CONVERSATION RULES:
             recent_diagnosis=doctor_issue,
             history=conversation_history
         )
+    else:
+        # Re-sync language accurately from generated text script
+        if re.search(r'[\u0900-\u097F]', spoken_response):
+            language = "hi"
+            target_lang_name = "Hindi (हिन्दी)"
+        elif re.search(r'[\u0980-\u09FF]', spoken_response):
+            language = "bn"
+            target_lang_name = "Bengali (বাংলা)"
 
     # Clean text specifically for human voice synthesis
     clean_speech_text = clean_text_for_speech(spoken_response, lang=language)

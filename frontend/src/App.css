@@ -4822,6 +4822,65 @@
 }
 
 /* =========================================================
+   VOICE LANGUAGE SELECTOR BAR
+========================================================= */
+.voice-lang-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f1f8f3;
+  border: 1px solid #d5e8db;
+  border-radius: 12px;
+  padding: 8px 14px;
+}
+
+.lang-bar-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1b5e20;
+}
+
+.lang-bar-options {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.voice-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid #c8decb;
+  background: #ffffff;
+  color: #2e5936;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.voice-lang-btn:hover {
+  background: #e8f5e9;
+  border-color: #2e7d32;
+  color: #1b5e20;
+}
+
+.voice-lang-btn.active {
+  background: #1b5e20;
+  border-color: #1b5e20;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(27, 94, 32, 0.25);
+  font-weight: 700;
+}
+
+/* =========================================================
    REAL STATE STEPPER BAR
 ========================================================= */
 .voice-state-stepper-container {
@@ -5783,4 +5842,79 @@
     width: 100%;
     justify-content: center;
   }
+}
+
+/* =========================================================
+   VOICE ASSISTANT EXPLICIT LANGUAGE SWITCHER BAR
+========================================================= */
+
+.voice-lang-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f1f8f3;
+  border: 1px solid #d4e7d7;
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin: 0 0 16px 0;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lang-bar-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1b5e20;
+}
+
+.lang-bar-options {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.voice-lang-btn {
+  background: #ffffff;
+  border: 1px solid #c8dfcd;
+  color: #2e5939;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.voice-lang-btn:hover {
+  background: #e8f5e9;
+  border-color: #81c784;
+  color: #1b5e20;
+}
+
+.voice-lang-btn.active {
+  background: #1b5e20;
+  color: #ffffff;
+  border-color: #1b5e20;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(27, 94, 32, 0.25);
+}
+
+.voice-lang-btn .mode-badge {
+  font-size: 0.68rem;
+  background: rgba(255, 255, 255, 0.22);
+  padding: 1px 6px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.voice-lang-btn:not(.active) .mode-badge {
+  background: #eef4ef;
+  color: #4a7c59;
 }

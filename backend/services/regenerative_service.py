@@ -232,7 +232,7 @@ Tailor every recommendation to the farmer's specific crop, soil type, location i
 Do NOT return generic text — be specific to {crop} grown in {soil} in {location}.
 Return ONLY the JSON object, no markdown fences."""
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={api_key}"
     payload = {
         "contents": [{"role": "user", "parts": [{"text": system_prompt}]}],
         "generationConfig": {"temperature": 0.35, "maxOutputTokens": 1500,

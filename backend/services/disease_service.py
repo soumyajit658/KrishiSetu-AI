@@ -178,7 +178,7 @@ Respond ONLY with a valid JSON object matching this structure without any markdo
 }}
 """
 
-    gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={api_key}"
     payload = {
         "contents": [{
             "parts": [

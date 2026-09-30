@@ -36,7 +36,7 @@ function Dashboard({
   onOpenRegenerative,
   onOpenVoice,
 }) {
-  const { t, language, translateCrop, translateSoil, translateIrrigation } = useLanguage();
+  const { t, language, translateCrop, translateSoil, translateIrrigation, translateFarmerName } = useLanguage();
   const [liveWeather, setLiveWeather] = useState(null);
 
   // Auto-fetch live weather preview for dashboard header card
@@ -59,7 +59,8 @@ function Dashboard({
   }, [farmData?.location]);
 
   const cropName = farmData?.crop ? translateCrop(farmData.crop) : "";
-  const farmerDisplayName = farmerProfile?.name || t("common.farmer");
+  const rawFarmerName = farmerProfile?.name || t("common.farmer");
+  const farmerDisplayName = translateFarmerName(rawFarmerName);
 
   return (
     <div className="dashboard">
@@ -124,7 +125,7 @@ function Dashboard({
             <span className="dashboard-label">{t("dashboard.controlCenter")}</span>
             <h1>
               {farmerProfile?.name
-                ? `${t("dashboard.greetingPrefix", "Good day")}, ${farmerProfile.name} 👋`
+                ? `${t("dashboard.greetingPrefix", "Good day")}, ${farmerDisplayName} 👋`
                 : t("dashboard.greeting")}
             </h1>
             <p>{t("dashboard.welcomeDesc")}</p>
