@@ -325,7 +325,9 @@ function ChatModal({ isOpen, onClose, farmData, analysisContext, onClearContext 
                 <Key size={16} />
                 <span>{t("chat.apiKeyConfig")}</span>
               </div>
-              <button className="close-mini-btn" onClick={() => setShowKeyConfig(false)}>✕</button>
+              <button className="close-mini-btn" onClick={() => setShowKeyConfig(false)} title="Close panel" aria-label="Close panel">
+                <X size={15} />
+              </button>
             </div>
             <p className="key-panel-desc">
               {t("chat.apiKeyDesc")} 

@@ -1575,7 +1575,8 @@
   }
 }
 
-.close-btn {
+.close-btn,
+.modal-close-btn {
   position: relative;
   background: #f1f6f1;
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -1597,7 +1598,8 @@
   outline: none;
 }
 
-.close-btn svg {
+.close-btn svg,
+.modal-close-btn svg {
   display: block;
   transition: 
     transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -1606,7 +1608,8 @@
   color: inherit;
 }
 
-.close-btn:hover {
+.close-btn:hover,
+.modal-close-btn:hover {
   background: #fef2f2;
   border-color: #fca5a5;
   color: #dc2626;
@@ -1615,19 +1618,22 @@
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef4444' stroke='%23ffffff' stroke-width='1.5' stroke-linejoin='round' d='M4.5 3.5l14 7.5-6 1.8-2.2 6.2-5.8-15.5z'/%3E%3C/svg%3E") 4 4, pointer;
 }
 
-.close-btn:hover svg {
+.close-btn:hover svg,
+.modal-close-btn:hover svg {
   color: #dc2626;
   transform: rotate(90deg) scale(1.12);
 }
 
-.close-btn:active {
+.close-btn:active,
+.modal-close-btn:active {
   transform: scale(0.92);
   background: #fee2e2;
   animation: none;
   box-shadow: 0 1px 4px rgba(220, 38, 38, 0.25);
 }
 
-.close-btn:active svg {
+.close-btn:active svg,
+.modal-close-btn:active svg {
   transform: rotate(90deg) scale(0.95);
 }
 
@@ -1737,11 +1743,42 @@
 }
 
 .close-mini-btn {
-  background: none;
-  border: none;
-  color: #6d8872;
-  font-size: 14px;
-  cursor: pointer;
+  background: #f1f6f1;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  color: #55725d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef4444' stroke='%23ffffff' stroke-width='1.5' stroke-linejoin='round' d='M4.5 3.5l14 7.5-6 1.8-2.2 6.2-5.8-15.5z'/%3E%3C/svg%3E") 4 4, pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+  padding: 0;
+}
+
+.close-mini-btn svg {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  transform-origin: center;
+}
+
+.close-mini-btn:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #dc2626;
+  transform: scale(1.15);
+  animation: closeBtnPulse 1.3s infinite;
+}
+
+.close-mini-btn:hover svg {
+  color: #dc2626;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.close-mini-btn:active {
+  transform: scale(0.9);
 }
 
 .key-panel-desc {
@@ -3153,17 +3190,41 @@
   position: absolute;
   top: 4px;
   right: 4px;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(18, 43, 27, 0.85);
   color: #ffffff;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef4444' stroke='%23ffffff' stroke-width='1.5' stroke-linejoin='round' d='M4.5 3.5l14 7.5-6 1.8-2.2 6.2-5.8-15.5z'/%3E%3C/svg%3E") 4 4, pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.thumb-remove svg {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  transform-origin: center;
+}
+
+.thumb-remove:hover {
+  background: #dc2626;
+  border-color: #fca5a5;
+  color: #ffffff;
+  transform: scale(1.18);
+  animation: closeBtnPulse 1.3s infinite;
+}
+
+.thumb-remove:hover svg {
+  transform: rotate(90deg) scale(1.1);
+}
+
+.thumb-remove:active {
+  transform: scale(0.92);
 }
 
 .thumb-label {
@@ -3872,6 +3933,7 @@
   border-color: #fca5a5;
   color: #dc2626;
   transform: scale(1.15);
+  animation: closeBtnPulse 1.3s infinite;
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef4444' stroke='%23ffffff' stroke-width='1.5' stroke-linejoin='round' d='M4.5 3.5l14 7.5-6 1.8-2.2 6.2-5.8-15.5z'/%3E%3C/svg%3E") 4 4, pointer;
 }
 
@@ -4878,12 +4940,14 @@
 
 /* Stage */
 .voice-interaction-stage {
-  min-height: 250px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 14px 4px;
+  justify-content: flex-start;
+  padding: 10px 4px 16px 4px;
+  width: 100%;
+  position: relative;
 }
 
 .voice-state-view {
@@ -4892,6 +4956,11 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.voice-state-view.idle-view,
+.voice-state-view.listening-view {
+  margin: auto 0;
 }
 
 /* Big Mic Button & Ripple Rings */
@@ -5412,10 +5481,16 @@
 /* Real Voice Action Buttons: Replay | Stop | Try Again */
 .voice-action-buttons {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  margin-top: 20px;
+  margin-bottom: 14px;
+  padding: 4px 0;
+  position: relative;
+  z-index: 5;
 }
 
 .voice-btn-action {
@@ -5494,8 +5569,13 @@
 
 /* Quick Starters Section */
 .voice-quick-starters-section {
-  border-top: 1px solid #edf3eb;
-  padding-top: 14px;
+  border-top: 1px solid #e5ede3;
+  padding-top: 18px;
+  margin-top: 12px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  clear: both;
 }
 
 .quick-starters-label {
