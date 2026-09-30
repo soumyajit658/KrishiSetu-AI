@@ -57,6 +57,8 @@ export const TRANSLATIONS = {
     dashboard: {
       controlCenter: "🌾 FARMER CONTROL CENTER",
       greeting: "Good day, Farmer 👋",
+      greetingPrefix: "Good day",
+      hello: "Hello",
       welcomeDesc: "Real-time agricultural intelligence and AI decision support tailored for your field.",
       farmLocation: "Farm Location",
       registeredProfile: "REGISTERED FARM PROFILE",
@@ -351,6 +353,8 @@ export const TRANSLATIONS = {
     dashboard: {
       controlCenter: "🌾 किसान नियंत्रण केंद्र",
       greeting: "नमस्ते, किसान भाई 👋",
+      greetingPrefix: "नमस्ते",
+      hello: "नमस्ते",
       welcomeDesc: "आपके खेत के लिए अनुकूलित वास्तविक समय कृषि बुद्धिमत्ता और एआई निर्णय सहायता।",
       farmLocation: "खेत का स्थान",
       registeredProfile: "पंजीकृत खेत विवरण",
@@ -645,6 +649,8 @@ export const TRANSLATIONS = {
     dashboard: {
       controlCenter: "🌾 কৃষক নিয়ন্ত্রণ কেন্দ্র",
       greeting: "নমস্কার, কৃষক বন্ধু 👋",
+      greetingPrefix: "নমস্কার",
+      hello: "নমস্কার",
       welcomeDesc: "আপনার জমির জন্য উপযোগী রিয়েল-টাইম কৃষি তথ্য ও এআই সিদ্ধান্ত সহায়তা।",
       farmLocation: "খামারের অবস্থান",
       registeredProfile: "নিবন্ধিত খামার প্রোফাইল",

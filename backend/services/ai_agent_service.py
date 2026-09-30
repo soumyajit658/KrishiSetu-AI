@@ -105,10 +105,10 @@ async def query_gemini_api(
 ) -> Optional[str]:
     """Query Google Gemini API with fallback across flash models."""
     models_to_try = [
-        "gemini-1.5-flash",
-        "gemini-2.0-flash",
-        "gemini-1.5-flash-latest",
-        "gemini-1.5-pro"
+        "gemini-3.8-flash",
+        "gemini-3.7-flash",
+        "gemini-flash-latest",
+        "gemini-2.5-flash-lite"
     ]
     
     # 1. Format clean conversation contents (alternating user/model, starting with user)

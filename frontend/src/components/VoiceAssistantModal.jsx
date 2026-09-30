@@ -21,6 +21,7 @@ import {
   RefreshCw,
   Cpu,
   AudioWaveform,
+  Languages,
 } from "lucide-react";
 import { api } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
@@ -63,33 +64,30 @@ function detectClientLanguage(text, defaultLang = "en") {
   // 2. Devanagari Unicode block (\u0900-\u097F)
   if (/[\u0900-\u097F]/.test(str)) return "hi";
 
-  // 3. Phonetic transliteration check for Romanized text
   const lower = str.toLowerCase();
-  const bnKeywords = [
-    "amar", "amader", "dhaner", "dhane", "dhan", "pata", "patagulo", "patay", "holud", 
-    "ki korbo", "korbo", "kore", "kora", "shorisa", "alu", "chash", "pani", "jol", 
-    "brishti", "agami", "agamikal", "rog", "poka", "sar", "debo", "uchit", "jomite", 
-    "jomi", "kobe", "kemon", "kivabe", "ki vabe", "achhe", "ache", "hobe", "sesh", 
-    "fosol", "chara", "beej", "sech", "daag"
-  ];
-  const hiKeywords = [
-    "meri", "mera", "mere", "fasal", "faslo", "gehu", "dhan", "kya karu", "kya kare", 
-    "peela", "peeli", "peele", "pani", "paani", "khad", "kisan", "keede", "keeda", 
-    "barish", "barsat", "kab", "sinchai", "dhabbe", "dhabba", "rog", "kitna", "kitni", 
-    "dena", "chahiye", "cheiya", "kaise", "kare", "khet", "kheto", "patte", "pattiya", "dawa", "chhidkaw"
-  ];
 
-  let bnHits = 0;
-  let hiHits = 0;
-  bnKeywords.forEach((kw) => {
-    if (lower.includes(kw)) bnHits++;
-  });
-  hiKeywords.forEach((kw) => {
-    if (lower.includes(kw)) hiHits++;
-  });
+  // 3. Multi-word phrase matching
+  const hiPhrases = /kya karu|kya kare|kya dale|kaise kare|kab dena|pani kab|khad kab|kaun si|konsi dawa|peela pad|peeli ho|keeda lag|fasal me|khet me|kisan bhai|kya upaye|rog laga/i;
+  const bnPhrases = /ki korbo|ki vabe|kivabe|dhaner pata|pani kobe|agami kal|jol debo|sar debo|poka legeche|patay daag|rog legeche/i;
+  const enPhrases = /should i|what should|how to|when should|can i|do i need|my crop is|crop health/i;
 
-  if (bnHits > hiHits && bnHits > 0) return "bn";
-  if (hiHits > bnHits && hiHits > 0) return "hi";
+  let hiScore = hiPhrases.test(lower) ? 5.0 : 0;
+  let bnScore = bnPhrases.test(lower) ? 5.0 : 0;
+  let enScore = enPhrases.test(lower) ? 5.0 : 0;
+
+  // 4. Token & Keyword scoring
+  const hiMatches = lower.match(/\b(meri|mera|mere|fasal|faslo|gehu|dhan|kya|karu|kare|karna|peela|peeli|peele|pani|paani|khad|kisan|keede|keeda|sundi|barish|sinchai|sinchayi|kab|kitna|kitni|dena|dale|chahiye|chaiye|cheiya|main|mein|me|hai|hain|khet|dawa|dawai|chhidkaw|beej|buwai|mitti|upchar|batao|bataiye|namaste|namaskar|namaskaar|dhanyawad|shukriya|patte|pattiya|rog)\b/g);
+  const bnMatches = lower.match(/\b(amar|amader|dhaner|dhane|dhan|pata|patagulo|patay|holud|ki|korbo|kore|kora|shorisa|alu|chash|pani|jol|brishti|agami|agamikal|rog|poka|sar|debo|uchit|jomite|jomi|kobe|kemon|kivabe|achhe|ache|hobe|sesh|fosol|chara|beej|sech|daag)\b/g);
+  const enMatches = lower.match(/\b(tomorrow|yesterday|yellowing|infection|symptoms|advice|suggestion|recommend|harvesting|irrigate|fertilizer|spray|pesticide|fungicide)\b/g);
+
+  if (hiMatches) hiScore += hiMatches.length * 1.8;
+  if (bnMatches) bnScore += bnMatches.length * 1.8;
+  if (enMatches) enScore += enMatches.length * 1.2;
+
+  if (hiScore >= 1.5 && hiScore >= bnScore && hiScore >= enScore) return "hi";
+  if (bnScore >= 1.5 && bnScore > hiScore && bnScore >= enScore) return "bn";
+  if (enScore >= 2.0 && enScore > hiScore && enScore > bnScore) return "en";
+  if (hiScore > 0) return "hi";
 
   return defaultLang;
 }
@@ -141,6 +139,16 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
     return appLanguage === "bn" ? "bn" : appLanguage === "hi" ? "hi" : "en";
   });
 
+  // Explicit voice language mode: 'auto' | 'hi' | 'bn' | 'en'
+  const [voiceLangMode, setVoiceLangMode] = useState("auto");
+
+  const handleSetLanguageMode = (mode) => {
+    setVoiceLangMode(mode);
+    if (mode !== "auto") {
+      setDetectedLang(mode);
+    }
+  };
+
   // Explicit real state machine: 'idle' | 'listening' | 'processing' | 'thinking' | 'speaking' | 'finished' | 'error'
   const [voiceState, setVoiceState] = useState("idle");
   const [transcript, setTranscript] = useState("");
@@ -170,8 +178,10 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
   // Sync default modal language with app language if app changes or modal opens
   useEffect(() => {
     const validLang = appLanguage === "bn" || appLanguage === "hi" || appLanguage === "en" ? appLanguage : "en";
-    setDetectedLang(validLang);
-  }, [appLanguage, isOpen]);
+    if (voiceLangMode === "auto") {
+      setDetectedLang(validLang);
+    }
+  }, [appLanguage, isOpen, voiceLangMode]);
 
   // Clean up audio & recognition when closing
   useEffect(() => {
@@ -246,7 +256,19 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
       const recognition = new SpeechRecognition();
       recognitionRef.current = recognition;
 
-      let langTag = detectedLang === "bn" ? "bn-IN" : detectedLang === "hi" ? "hi-IN" : (navigator.language || "en-IN");
+      let langTag = "hi-IN";
+      if (voiceLangMode === "hi") {
+        langTag = "hi-IN";
+      } else if (voiceLangMode === "bn") {
+        langTag = "bn-IN";
+      } else if (voiceLangMode === "en") {
+        langTag = "en-IN";
+      } else {
+        if (detectedLang === "bn") langTag = "bn-IN";
+        else if (detectedLang === "hi") langTag = "hi-IN";
+        else if (detectedLang === "en") langTag = "en-IN";
+        else langTag = "hi-IN";
+      }
       recognition.lang = langTag;
       recognition.continuous = true;
       recognition.interimResults = true;
@@ -263,8 +285,8 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
         }
         setTranscript(currentTranscript);
 
-        // Instant automatic language recognition on live speech
-        if (currentTranscript.trim()) {
+        // Instant automatic language recognition on live speech if in auto mode
+        if (currentTranscript.trim() && voiceLangMode === "auto") {
           const liveDetected = detectClientLanguage(currentTranscript, detectedLang);
           setDetectedLang(liveDetected);
         }
@@ -341,9 +363,9 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
     // Step 1: Processing state (audio finalized & transcribing)
     setVoiceState("processing");
 
-    // Automatically detect language from query
-    const autoLang = detectClientLanguage(query, detectedLang);
-    setDetectedLang(autoLang);
+    // Automatically detect or sync language
+    const targetLang = voiceLangMode !== "auto" ? voiceLangMode : detectClientLanguage(query, detectedLang);
+    setDetectedLang(targetLang);
 
     // Step 2: Transition to Understanding/Thinking while sending to backend
     setTimeout(async () => {
@@ -352,13 +374,13 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
       try {
         const result = await api.processVoice(
           query,
-          "auto", // Auto detect language
+          voiceLangMode !== "auto" ? voiceLangMode : "auto", // Explicit mode or auto
           farmData,
           fieldContext,
           conversationHistory
         );
 
-        if (result?.detected_language) {
+        if (result?.detected_language && voiceLangMode === "auto") {
           setDetectedLang(result.detected_language);
         }
 
@@ -571,6 +593,55 @@ function VoiceAssistantModal({ isOpen, onClose, farmData, fieldContext, onOpenDo
           <button className="close-btn modal-close-btn" onClick={onClose} aria-label="Close KrishiBandhu Voice" title="Close">
             <X size={20} />
           </button>
+        </div>
+
+        {/* ================= LANGUAGE SELECTOR BAR ================= */}
+        <div className="voice-lang-bar">
+          <div className="lang-bar-title">
+            <Languages size={16} />
+            <span>
+              {detectedLang === "bn"
+                ? "ভাষা নির্বাচন (ভয়েস মোড):"
+                : detectedLang === "hi"
+                ? "भाषा चुनें (वॉयस मोड):"
+                : "Voice Language Mode:"}
+            </span>
+          </div>
+          <div className="lang-bar-options">
+            <button
+              type="button"
+              className={`voice-lang-btn ${voiceLangMode === "auto" ? "active" : ""}`}
+              onClick={() => handleSetLanguageMode("auto")}
+              title="Automatically detect whether you speak Hindi, Bengali, or English"
+            >
+              <span className="mode-badge">Auto</span>
+              <span>{LANGUAGE_LABELS[detectedLang] || "Auto Detect"}</span>
+            </button>
+            <button
+              type="button"
+              className={`voice-lang-btn ${voiceLangMode === "hi" ? "active" : ""}`}
+              onClick={() => handleSetLanguageMode("hi")}
+              title="Force Hindi (हिन्दी) recognition"
+            >
+              🇮🇳 हिन्दी (Hindi)
+            </button>
+            <button
+              type="button"
+              className={`voice-lang-btn ${voiceLangMode === "bn" ? "active" : ""}`}
+              onClick={() => handleSetLanguageMode("bn")}
+              title="Force Bengali (বাংলা) recognition"
+            >
+              বাংলা (Bengali)
+            </button>
+            <button
+              type="button"
+              className={`voice-lang-btn ${voiceLangMode === "en" ? "active" : ""}`}
+              onClick={() => handleSetLanguageMode("en")}
+              title="Force English recognition"
+            >
+              English
+            </button>
+          </div>
         </div>
 
         {/* ================= REAL STATE STEPPER BAR ================= */}

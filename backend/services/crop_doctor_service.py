@@ -334,7 +334,7 @@ Respond ONLY with a valid JSON object matching this schema without markdown fenc
             }
         })
 
-    gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={key}"
+    gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={key}"
     try:
         async with httpx.AsyncClient(timeout=25.0) as client:
             resp = await client.post(gemini_url, json={

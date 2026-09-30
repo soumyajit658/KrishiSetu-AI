@@ -201,24 +201,32 @@ export const api = {
       // Real client-side language detection for offline resilience
       let detectedLang = language;
       if (!detectedLang || detectedLang === "auto") {
-        if (/[\u0980-\u09FF]/.test(query)) {
-          detectedLang = "bn";
-        } else if (/[\u0900-\u097F]/.test(query)) {
+        if (/[\u0900-\u097F]/.test(query)) {
           detectedLang = "hi";
+        } else if (/[\u0980-\u09FF]/.test(query)) {
+          detectedLang = "bn";
         } else {
           const qL = query.toLowerCase();
-          const bnScore = (qL.match(/\b(amar|dhaner|dhane|dhan|pata|patagulo|holud|ki korbo|korbo|jol|brishti|poka|sar|jomite|jomi|kobe|kemon|kivabe|achhe|ache|hobe|fosol|chara)\b/g) || []).length * 1.5;
-          const hiScore = (qL.match(/\b(meri|mera|mere|fasal|faslo|gehu|dhan|kya|karu|kare|karna|peela|peeli|peele|pani|paani|khad|kisan|keede|keeda|barish|sinchai|sinchayi|kab|kitna|dena|chahiye|chaiye|cheiya|main|mein|me|hai|hain|khet|dawa)\b/g) || []).length * 1.5;
-          const enScore = (qL.match(/\b(crop|water|irrigate|fertilizer|yellow|leaves|leaf|rain|spray|pest|insect|disease|why|when|how|what|should|give)\b/g) || []).length;
-          
-          if (hiScore > bnScore && hiScore >= 1.0) {
+          const hiPhrases = /kya karu|kya kare|kya dale|kaise kare|kab dena|pani kab|khad kab|kaun si|konsi dawa|peela pad|peeli ho|keeda lag|fasal me|khet me|kisan bhai/i;
+          const bnPhrases = /ki korbo|ki vabe|kivabe|dhaner pata|pani kobe|agami kal|jol debo|sar debo|poka legeche/i;
+          const enPhrases = /should i|what should|how to|when should|can i|do i need|my crop is/i;
+
+          let hiScore = hiPhrases.test(qL) ? 4.5 : 0;
+          let bnScore = bnPhrases.test(qL) ? 4.5 : 0;
+          let enScore = enPhrases.test(qL) ? 4.5 : 0;
+
+          hiScore += (qL.match(/\b(meri|mera|mere|fasal|faslo|gehu|dhan|kya|karu|kare|karna|peela|peeli|peele|pani|paani|khad|kisan|keede|keeda|sundi|barish|sinchai|sinchayi|kab|kitna|kitni|dena|dale|chahiye|chaiye|cheiya|main|mein|me|hai|hain|khet|dawa|dawai|chhidkaw|beej|buwai|mitti|upchar|batao|bataiye)\b/g) || []).length * 1.8;
+          bnScore += (qL.match(/\b(amar|dhaner|dhane|dhan|pata|patagulo|holud|ki korbo|korbo|jol|brishti|poka|sar|jomite|jomi|kobe|kemon|kivabe|achhe|ache|hobe|fosol|chara|alu|chash)\b/g) || []).length * 1.8;
+          enScore += (qL.match(/\b(tomorrow|yesterday|yellowing|infection|symptoms|advice|suggestion|recommend|harvesting)\b/g) || []).length * 1.2;
+
+          if (hiScore >= 1.5 && hiScore >= bnScore && hiScore >= enScore) {
             detectedLang = "hi";
-          } else if (bnScore > hiScore && bnScore >= 1.0) {
+          } else if (bnScore >= 1.5 && bnScore > hiScore && bnScore >= enScore) {
             detectedLang = "bn";
-          } else if (enScore >= 1.0) {
+          } else if (enScore >= 2.0 && enScore > hiScore && enScore > bnScore) {
             detectedLang = "en";
           } else {
-            detectedLang = "en";
+            detectedLang = hiScore > 0 ? "hi" : "en";
           }
         }
       }

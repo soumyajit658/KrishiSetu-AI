@@ -39,7 +39,7 @@ function FarmerProfileModal({
   farmData,
   onSetupFarm,
 }) {
-  const { t, translateCrop, translateSoil, translateIrrigation } = useLanguage();
+  const { t, translateCrop, translateSoil, translateIrrigation, translateFarmerName } = useLanguage();
 
   const [activeTab, setActiveTab] = useState("overview"); // "overview" | "edit"
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
@@ -250,7 +250,7 @@ function FarmerProfileModal({
 
             <div className="profile-hero-meta">
               <div className="hero-name-row">
-                <h2>{farmerProfile?.name || "Ramesh Kumar"}</h2>
+                <h2>{translateFarmerName(farmerProfile?.name || "Ramesh Kumar")}</h2>
                 <span className="kisan-verified-badge" title="Official Government Kisan Identity">
                   <ShieldCheck size={14} />
                   <span>Kisan ID: {farmerProfile?.kisanId || "KISAN-WB-7842"}</span>
@@ -362,7 +362,7 @@ function FarmerProfileModal({
                   <div className="info-key-val-list">
                     <div className="info-row">
                       <span className="info-key">Full Name</span>
-                      <strong className="info-val">{farmerProfile?.name || "Ramesh Kumar"}</strong>
+                      <strong className="info-val">{translateFarmerName(farmerProfile?.name || "Ramesh Kumar")}</strong>
                     </div>
                     <div className="info-row">
                       <span className="info-key">Mobile Phone</span>
